@@ -1,5 +1,6 @@
-package OriginalData.Ascii.Merge;
+package Model.GetTheSelectedGrid;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -11,15 +12,15 @@ import Global.Global;
 
 public class GetFloodedValueSelected {
 
-	public static void main(String[] args) throws IOException {
+	public GetFloodedValueSelected(int selectGrid) throws IOException {
 		// TODO Auto-generated method stub]
 		
-		int getGrid = 3;
+		int getGrid = selectGrid;
 		
 		TreeMap<String,String[][]> selectedGrid = getSelectedGrid();
 		String iotList[][] = getIotStation();
 		
-		String floodedFile = "C:\\HomeWork\\山峰可可\\mergedAscii\\";
+		String floodedFile = Global.saveFolder_MergeResult;
 		
 		for(String iot[] : iotList) {
 			String[][] iotSelected = selectedGrid.get(iot[0]);
@@ -29,7 +30,9 @@ public class GetFloodedValueSelected {
 			ArrayList<String> outArray = new ArrayList<String>();
 			outArray.add(stationName);
 			
-			for(int eventFile = 0 ; eventFile<= Global.eventTime;eventFile++) {
+			
+			
+			for(int eventFile = 0 ; eventFile< new File(floodedFile).list().length;eventFile++) {
 				// read the event ascii grid
 				String[][] ascii = new AsciiBasicControl(floodedFile + eventFile + ".asc").getAsciiGrid();
 				ArrayList<Double> temptValue = new ArrayList<Double>();
@@ -47,7 +50,7 @@ public class GetFloodedValueSelected {
 						}
 					}
 				}
-				outArray.add(new AtCommonMath(temptValue.stream().mapToDouble(Double::doubleValue).toArray()).getMean() + "");
+				outArray.add(new AtCommonMath(temptValue.stream().mapToDouble(Double::doubleValue).toArray()).getMax() + "");
 			}
 			outArray.forEach(text -> System.out.print(text + "\t"));
 			System.out.println();

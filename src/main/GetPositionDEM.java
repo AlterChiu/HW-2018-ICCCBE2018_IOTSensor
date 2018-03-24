@@ -1,4 +1,4 @@
-package OriginalData.Ascii.Merge;
+package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
