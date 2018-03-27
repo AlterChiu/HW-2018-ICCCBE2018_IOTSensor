@@ -1,4 +1,4 @@
-package main;
+package Model.GetPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
