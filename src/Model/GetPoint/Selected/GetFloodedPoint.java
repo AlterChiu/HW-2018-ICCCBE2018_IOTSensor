@@ -1,4 +1,4 @@
-package Model.GetPoint.MostPossibelPosition;
+package Model.GetPoint.Selected;
 
 import java.io.File;
 import java.io.IOException;
