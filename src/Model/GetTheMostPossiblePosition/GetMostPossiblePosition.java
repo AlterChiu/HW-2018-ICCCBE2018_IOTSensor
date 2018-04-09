@@ -63,8 +63,6 @@ public class GetMostPossiblePosition {
 							}
 						}
 
-						int chooseRow = 0;
-						int chooseColumn = 0;
 
 						int index = new AtCommonMath(temptValue.stream().mapToDouble(Double::doubleValue).toArray())
 								.getClosestIndex(observationValue);

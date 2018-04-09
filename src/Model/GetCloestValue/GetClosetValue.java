@@ -32,8 +32,8 @@ public class GetClosetValue {
 			// get the iot sensor property
 			// ===============================
 			String stationName = iot[0];
-			int column = Integer.parseInt(iot[1]);
-			int row = Integer.parseInt(iot[2]);
+			double x = Double.parseDouble(iot[1]);
+			double y = Double.parseDouble(iot[2]);
 
 			ArrayList<String> outArray = new ArrayList<String>();
 			outArray.add(stationName);
@@ -41,7 +41,12 @@ public class GetClosetValue {
 			String[] eventFileList = new File(this.floodedFile).list();
 			for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
 				// read the event ascii grid
-				String[][] ascii = new AsciiBasicControl(floodedFile + eventFile + ".asc").getAsciiGrid();
+				AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
+				String[][] ascii =asciiControl .getAsciiGrid();
+				int position[] = asciiControl.getPosition(x, y);
+				int row = position[1];
+				int column = position[0];
+				
 				ArrayList<Double> temptValue = new ArrayList<Double>();
 
 				// get the selected grid
@@ -71,9 +76,7 @@ public class GetClosetValue {
 	}
 
 	private static String[][] getIotStation() {
-		return new String[][] { { "安中五站", "372", "356" }, { "海佃四站", "536", "341" }, { "海佃三段站", "571", "427" },
-				{ "朝皇宮站", "573", "467" }, { "龍金站", "749", "331" }, { "安中站", "620", "447" }, { "頂安站", "676", "453" },
-				{ "安和站", "742", "444" }, { "溪頂寮站", "729", "519" }, { "裕農路裕義路口", "903", "742" } };
+		return Global.getIotPosition();
 	}
 
 	private TreeMap<String, ArrayList<String>> getEventObservation() throws IOException {

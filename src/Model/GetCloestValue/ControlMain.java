@@ -9,8 +9,8 @@ public class ControlMain {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		String eventSimulation = Global.Global.simulation0731;
-		String eventObservation = Global.Global.observation0731;
+		String eventSimulation = Global.Global.simulation0611;
+		String eventObservation = Global.Global.observation0611;
 		
 		System.out.println("start ascii merge");
 		new MergeZoneAscii(eventSimulation);
