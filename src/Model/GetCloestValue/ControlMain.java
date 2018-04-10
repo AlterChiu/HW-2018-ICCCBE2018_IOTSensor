@@ -9,13 +9,13 @@ public class ControlMain {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		String eventSimulation = Global.Global.simulation0611;
-		String eventObservation = Global.Global.observation0611;
+		String eventSimulation = Global.Global.simulation0927;
+		String eventObservation = Global.Global.observation0927;
 		
 		System.out.println("start ascii merge");
 		new MergeZoneAscii(eventSimulation);
 		System.out.println("value detect");
-		new GetClosetValue(5,eventObservation);
+		new GetClosetValue(3,eventObservation);
 
 	}
 

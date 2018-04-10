@@ -17,10 +17,10 @@ public class GetMostPossiblePosition {
 	private String floodedFile;
 	private String eventObservation;
 
-	private TreeMap<String, ArrayList<Integer>> temptTree;
+	private TreeMap<String, ArrayList<String>> temptTree;
 
 	public GetMostPossiblePosition(int detectedGrid, String eventObservation,
-			TreeMap<String, ArrayList<Integer>> temptTree) throws IOException {
+			TreeMap<String, ArrayList<String>> temptTree) throws IOException {
 		// TODO Auto-generated method stub
 		this.temptTree = temptTree;
 		this.eventObservation = eventObservation;
@@ -35,8 +35,8 @@ public class GetMostPossiblePosition {
 			// get the iot sensor property
 			// ===============================
 			String stationName = iot[0];
-			int column = Integer.parseInt(iot[1]);
-			int row = Integer.parseInt(iot[2]);
+			double x = Double.parseDouble(iot[1]);
+			double y = Double.parseDouble(iot[2]);
 
 			
 			
@@ -46,35 +46,44 @@ public class GetMostPossiblePosition {
 			String[] eventFileList = new File(this.floodedFile).list();
 			for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
 				// read the event ascii grid
-				String[][] ascii = new AsciiBasicControl(floodedFile + eventFile + ".asc").getAsciiGrid();
-				ArrayList<Double> temptValue = new ArrayList<Double>();
+				AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
+				
+				String[][] ascii = asciiControl.getAsciiGrid();
+				int[] position = asciiControl.getPosition(x, y);
+				int column = position[0];
+				int row = position[1];
+				
+
 				try {
+					String key = "";
+					double minDis = 999;
 
 					double observationValue = Double.parseDouble(observationTree.get(stationName).get(eventFile));
 					// get the selected grid
 					if (observationValue > 0.05) {
-						for (int countRow = 1 * (getGrid - 1) / 2; countRow >= -1 * (getGrid - 1) / 2; countRow--) {
-							for (int countColumn = -1 * (getGrid - 1) / 2; countColumn <= (getGrid - 1)
+						for (int countRow = 1 * (getGrid) / 2; countRow >= -1 * (getGrid) / 2; countRow--) {
+							for (int countColumn = -1 * (getGrid) / 2; countColumn <= (getGrid)
 									/ 2; countColumn++) {
 
-								// only for 5*5 grid array
-								temptValue.add(Double.parseDouble(ascii[row + countRow][column + countColumn]));
-
+								double dis = Math.abs(Double.parseDouble(ascii[row + countRow][column + countColumn]) - observationValue);
+								if(dis < minDis) {
+									key = countRow + "_" + countColumn;
+									minDis = dis;
+								}
 							}
 						}
-
-
-						int index = new AtCommonMath(temptValue.stream().mapToDouble(Double::doubleValue).toArray())
-								.getClosestIndex(observationValue);
+						
+						
+					
 						
 
 						try {
-							ArrayList<Integer> temptArray = this.temptTree.get(stationName);
-							temptArray.add(index);
+							ArrayList<String> temptArray = this.temptTree.get(stationName);
+							temptArray.add(key);
 							this.temptTree.put(stationName, temptArray);
 						} catch (Exception e) {
-							ArrayList<Integer> temptArray = new ArrayList<Integer>();
-							temptArray.add(index);
+							ArrayList<String> temptArray = new ArrayList<String>();
+							temptArray.add(key);
 							this.temptTree.put(stationName, temptArray);
 						}
 
@@ -87,14 +96,12 @@ public class GetMostPossiblePosition {
 
 	}
 
-	public TreeMap<String, ArrayList<Integer>> getTreePositionTree() {
+	public TreeMap<String, ArrayList<String>> getTreePositionTree() {
 		return this.temptTree;
 	}
 
 	private static String[][] getIotStation() {
-		return new String[][] { { "安中五站", "372", "356" }, { "海佃四站", "536", "341" }, { "海佃三段站", "571", "427" },
-			{ "朝皇宮站", "573", "467" }, { "龍金站", "749", "331" }, { "安中站", "620", "447" }, { "頂安站", "676", "453" },
-			{ "安和站", "742", "444" }, { "溪頂寮站", "729", "519" }, { "裕農路裕義路口", "903", "742" } };
+		return Global.getIotPosition();
 	}
 
 	private TreeMap<String, ArrayList<String>> getEventObservation() throws IOException {

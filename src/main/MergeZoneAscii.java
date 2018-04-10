@@ -27,7 +27,6 @@ public class MergeZoneAscii {
 
 		// get the time steps in simulation folder
 		int dataSteps = new File(fileAdd + zoneNameList[0] + "\\").list().length;
-		System.out.println(dataSteps);
 		
 		for (int hours = 0; hours < dataSteps; hours++) {
 			// start from the first zone

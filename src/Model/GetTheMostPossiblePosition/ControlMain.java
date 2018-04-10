@@ -16,8 +16,8 @@ public class ControlMain {
 				Global.Global.simulation0611 };
 		String eventObservation[] = new String[] { Global.Global.observation0731, Global.Global.observation0927,
 				Global.Global.observation0611 };
-		TreeMap<String, ArrayList<Integer>> analysisTree = new TreeMap<String, ArrayList<Integer>>();
-		TreeMap<String, Integer[]> iotTree = getIotStation();
+		TreeMap<String, ArrayList<String>> analysisTree = new TreeMap<String, ArrayList<String>>();
+		TreeMap<String, Double[]> iotTree = getIotStation();
 
 		for (int index = 0; index < eventSimulation.length; index++) {
 			System.out.println("start ascii merge");
@@ -27,25 +27,22 @@ public class ControlMain {
 			analysisTree = new GetMostPossiblePosition(5, eventObservation[index], analysisTree).getTreePositionTree();
 
 		}
-		for (String iotStation : iotTree.keySet().parallelStream().toArray(String[]::new)) {
-			ArrayList<Integer> displacementList = analysisTree.get(iotStation);
-
+		for (int stationList = 0 ; stationList<analysisTree.size() ; stationList++) {
+			String iotStation = Global.Global.getIotPosition()[stationList][0];
+			
+			ArrayList<String> displacementList = analysisTree.get(iotStation);
+			System.out.print(iotStation + "\t");
+			
 			try {
-				int displace = new AtArrayFunction<Integer>().getMostReapetTimesValue(displacementList);
-				System.out.print(iotStation + "\t");
+				String displace = new AtArrayFunction<String>().getMostReapetTimesValue(displacementList);
+			
 				
-				int row = displace/5;
-				int column = displace - row*5;
+				int row = Integer.parseInt(displace.split("_")[0]);
+				int column = Integer.parseInt(displace.split("_")[1]);
+
 				
-				row = 2 - row;
-				column = column-2;
-				
-//				System.out.print(displace +  "\t");
-//				System.out.print(row +  "\t");
-//				System.out.print(column);
-				
-				System.out.print(iotTree.get(iotStation)[0] + column + "\t");
-				System.out.print(iotTree.get(iotStation)[1] + row);
+				System.out.print(iotTree.get(iotStation)[0] + column*20 + "\t");
+				System.out.print(iotTree.get(iotStation)[1] + row*20);
 				System.out.println();
 			} catch (Exception e) {
 			}
@@ -53,14 +50,12 @@ public class ControlMain {
 		}
 	}
 
-	private static TreeMap<String, Integer[]> getIotStation() {
-		TreeMap<String, Integer[]> temptTree = new TreeMap<String, Integer[]>();
-		String iotStations[][] = new String[][] {{ "安中五站", "372", "356" }, { "海佃四站", "536", "341" }, { "海佃三段站", "571", "427" },
-			{ "朝皇宮站", "573", "467" }, { "龍金站", "749", "331" }, { "安中站", "620", "447" }, { "頂安站", "676", "453" },
-			{ "安和站", "742", "444" }, { "溪頂寮站", "729", "519" }, { "裕農路裕義路口", "903", "742" }  };
+	private static TreeMap<String, Double[]> getIotStation() {
+		TreeMap<String, Double[]> temptTree = new TreeMap<String, Double[]>();
+		String iotStations[][] = Global.Global.getIotPosition();
 		for (String[] iotStation : iotStations) {
 			temptTree.put(iotStation[0],
-					new Integer[] { Integer.parseInt(iotStation[1]), Integer.parseInt(iotStation[2]) });
+					new Double[] { Double.parseDouble(iotStation[1]), Double.parseDouble(iotStation[2]) });
 		}
 		return temptTree;
 	}
