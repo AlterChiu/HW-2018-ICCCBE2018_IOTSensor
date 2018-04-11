@@ -11,17 +11,21 @@ public class AnalysisControl {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		String simulationFile ="S:\\HomeWork\\ICCCBE2018\\多次成果\\Water\\tempt.txt";
-		String observationFile = Global.Global.observation0927_10min;
+		String observationFile = Global.Global.observation0611_10min;
 		
 		TreeMap<String,ArrayList<String>> observation = getEventObservation(observationFile);
 		TreeMap<String,ArrayList<String>> simulation = getSimulation(simulationFile);
 		
 		TreeMap<String,String> CE = new Analysis_CE(observation , simulation).getResult();	
 		TreeMap<String,String> RMSE = new Analysis_RMSE(observation , simulation).getResult();	
+		TreeMap<String,String> Cor = new Analysis_R(observation,simulation).getResult();
 		Analysis_EH EH = new Analysis_EH(observation , simulation);	
 		
 		TreeMap<String,String> EHp = EH.getEHP();
 		TreeMap<String,String> ETp = EH.getETP();
+		TreeMap<String,String> EHh = EH.getEH();
+		
+		
 		
 		
 		for(String station : observation.keySet()) {
@@ -29,12 +33,12 @@ public class AnalysisControl {
 			System.out.print(CE.get(station) + "\t");
 			System.out.print(RMSE.get(station) + "\t");
 			System.out.print(EHp.get(station) + "\t");
-			System.out.println(ETp.get(station) +"\t");
+			System.out.print(ETp.get(station) +"\t");
+			System.out.print(Cor.get(station) + "\t");
+			System.out.println(EHh.get(station));
+			
 		}
 		
-		
-		
-
 	}
 	
 	

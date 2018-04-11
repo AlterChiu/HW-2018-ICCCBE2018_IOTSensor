@@ -23,7 +23,7 @@ public class ControlMain_10Min {
 			ff.copyFile(eventSimulation + originalName + String.format("%04d", index) + ".asc" , saveAdd + (index) + ".asc");
 		}
 		System.out.println("value detect");
-		new GetClosetValue(3,"S:\\HomeWork\\ICCCBE2018\\observation\\10min\\0611.txt");
+		new GetClosetValue(5,"S:\\HomeWork\\ICCCBE2018\\observation\\10min\\0611.txt");
 	}
 
 }

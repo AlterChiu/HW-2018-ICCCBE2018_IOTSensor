@@ -19,7 +19,7 @@ public class Analysis_CE {
 				ArrayList<String> observationList = observation.get(station);
 				ArrayList<String> simulationList = simulation.get(station);
 
-				double observationMean = new AtCommonMath(observationList.parallelStream().toArray(String[]::new)).getMean();
+				double observationMean = new AtCommonMath(observationList.parallelStream().toArray(String[]::new)).setPresision(10).getMean();
 
 				
 				for (int index = 0; index < observationList.size(); index++) {

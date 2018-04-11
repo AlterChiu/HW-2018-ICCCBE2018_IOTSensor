@@ -76,7 +76,7 @@ public class GetClosetValue {
 	}
 
 	private static String[][] getIotStation() {
-		return Global.getIotPosition();
+		return Global.getMG4CIotPosition();
 	}
 
 	private TreeMap<String, ArrayList<String>> getEventObservation() throws IOException {

@@ -30,29 +30,28 @@ public class GetMostPossiblePosition {
 		this.floodedFile = Global.saveFolder_MergeResult;
 
 		TreeMap<String, ArrayList<String>> observationTree = this.getEventObservation();
-
-		for (String iot[] : iotList) {
-			// get the iot sensor property
-			// ===============================
-			String stationName = iot[0];
-			double x = Double.parseDouble(iot[1]);
-			double y = Double.parseDouble(iot[2]);
-
+		String[] eventFileList = new File(this.floodedFile).list();
+		for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
+			// read the event ascii grid
+			AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
+			String[][] ascii = asciiControl.getAsciiGrid();
 			
-			
-			ArrayList<String> outArray = new ArrayList<String>();
-			outArray.add(stationName);
+			for (String iot[] : iotList) {
+				// get the iot sensor property
+				// ===============================
+				String stationName = iot[0];
+				double x = Double.parseDouble(iot[1]);
+				double y = Double.parseDouble(iot[2]);
 
-			String[] eventFileList = new File(this.floodedFile).list();
-			for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
-				// read the event ascii grid
-				AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
+				ArrayList<String> outArray = new ArrayList<String>();
+				outArray.add(stationName);
+
 				
-				String[][] ascii = asciiControl.getAsciiGrid();
+
+			
 				int[] position = asciiControl.getPosition(x, y);
 				int column = position[0];
 				int row = position[1];
-				
 
 				try {
 					String key = "";
@@ -62,20 +61,18 @@ public class GetMostPossiblePosition {
 					// get the selected grid
 					if (observationValue > 0.05) {
 						for (int countRow = 1 * (getGrid) / 2; countRow >= -1 * (getGrid) / 2; countRow--) {
-							for (int countColumn = -1 * (getGrid) / 2; countColumn <= (getGrid)
-									/ 2; countColumn++) {
+							for (int countColumn = -1 * (getGrid) / 2; countColumn <= (getGrid) / 2; countColumn++) {
 
-								double dis = Math.abs(Double.parseDouble(ascii[row + countRow][column + countColumn]) - observationValue);
-								if(dis < minDis) {
+								double dis = Math.abs(Double.parseDouble(ascii[row + countRow][column + countColumn])
+										- observationValue);
+								if (dis < minDis) {
 									key = countRow + "_" + countColumn;
 									minDis = dis;
 								}
 							}
 						}
 						
-						
-					
-						
+						System.out.println(key);
 
 						try {
 							ArrayList<String> temptArray = this.temptTree.get(stationName);
