@@ -22,10 +22,10 @@ public class Global {
 	
 	static public String saveFolder_MergeResult = "S:\\HomeWork\\ICCCBE2018\\mergedAscii\\";
 
-	static public String originalDem = "C:\\code\\javaWorkspace\\Fews\\ICCBE_IOTSensor\\TANZ1U01.lit\\DEM\\Original20m.asc";
-	static public String sobekRuntimeDem = "C:\\code\\javaWorkspace\\Fews\\ICCBE_IOTSensor\\TANZ1U01.lit\\DEM\\ZoneU1_20m.asc";
-	static public String sobekResult = "C:\\code\\javaWorkspace\\Fews\\ICCBE_IOTSensor\\Output\\";
-	static public String analysisFolder = "C:\\code\\javaWorkspace\\Fews\\ICCBE_IOTSensor\\Analysis\\";
+	static public String originalDem = "C:\\Sobek213\\TANZ1U01.lit\\DEM\\ZoneU1_20m.asc";
+	static public String sobekRuntimeDem = "C:\\Sobek213\\TANZ1U01.lit\\DEM\\firstDem.asc";
+	static public String sobekResult = "C:\\Sobek213\\Output\\";
+	static public String analysisFolder = "C:\\Sobek213\\Analysis\\";
 
 	static public TreeMap<String, String[]> getUncertaintyPosition() {
 		TreeMap<String, String[]> temptTree = new TreeMap<String, String[]>();

@@ -1,24 +1,20 @@
 package SOBEK;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Runtimes {
-	
+
 	public Runtimes() throws IOException {
-		
+
 		// run the sobek modle
 		// and the model.exe should be under this index
-		
-		String command = "cmd.exe /c start /wait C:\\code\\javaWorkspace\\Fews\\ICCBE_IOTSensor\\Mapreduce_Run.bat";
-		
-		Process p = Runtime.getRuntime().exec(command);
-		try {
-			p.waitFor();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		String command[] = new String[] { "cmd.exe", "/c", " start  /wait /B Sobek_Forecast.bat " };
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.directory(new File("C:\\Sobek213\\"));
+		builder.command(command);
+		builder.start();
 	}
 
 }

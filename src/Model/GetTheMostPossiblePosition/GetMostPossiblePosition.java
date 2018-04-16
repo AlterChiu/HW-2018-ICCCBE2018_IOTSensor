@@ -71,9 +71,6 @@ public class GetMostPossiblePosition {
 								}
 							}
 						}
-						
-						System.out.println(key);
-
 						try {
 							ArrayList<String> temptArray = this.temptTree.get(stationName);
 							temptArray.add(key);
@@ -83,7 +80,6 @@ public class GetMostPossiblePosition {
 							temptArray.add(key);
 							this.temptTree.put(stationName, temptArray);
 						}
-
 					}
 				} catch (Exception e) {
 

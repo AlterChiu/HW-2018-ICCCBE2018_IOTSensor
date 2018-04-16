@@ -44,6 +44,7 @@ public class ControlMain_10Min {
 		
 				try {
 					String displace = new AtArrayFunction<String>().getMostReapetTimesValue(displacementList);
+					System.out.print(displace);
 
 					int row = Integer.parseInt(displace.split("_")[0]);
 					int column =  Integer.parseInt(displace.split("_")[1]);

@@ -22,22 +22,22 @@ public class ControlMain {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
-		for (int time = 0; time < 100; time++) {
+//		for (int time = 0; time < 100; time++) {
 			// change the Dem
-			new DemUncertainty(Global.Global.originalDem).createNewDem(Global.Global.sobekRuntimeDem);
+//			new DemUncertainty(Global.Global.originalDem).createNewDem(Global.Global.sobekRuntimeDem);
 
-			// start sobek runtimes
-			new Runtimes();
-			  try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			// start sobek runtimes
+//			new Runtimes();
+//			  try {
+//				Thread.sleep(5000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 			// return the sobek result
 			moveResult();
-		}
+//		}
 
 		// output the analysis result
 //		SaveResult(analysisSetting().getAnalysisTree());
