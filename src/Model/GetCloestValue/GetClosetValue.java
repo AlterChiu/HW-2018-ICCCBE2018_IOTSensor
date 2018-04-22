@@ -3,7 +3,11 @@ package Model.GetCloestValue;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
@@ -14,69 +18,71 @@ import usualTool.AtFileReader;
 
 public class GetClosetValue {
 
-	private String floodedFile;
+	private String floodedFile = Global.temptSaveFolder;
 	private String eventObservation;
+	private int detectedGrid;
+	private Map<String, String[]> detectedPoint = new HashMap<String, String[]>();
+	private Map<String, String> resultTree = new HashMap<String, String>();
+	private Map<String, ArrayList<String>> observationTree = this.getEventObservation();
 
 	public GetClosetValue(int detectedGrid, String eventObservation) throws IOException {
 		// TODO Auto-generated method stub
 		this.eventObservation = eventObservation;
+		this.detectedGrid = detectedGrid;
+	}
 
-		int getGrid = detectedGrid;
-		String iotList[][] = getIotStation();
-		this.floodedFile = Global.saveFolder_MergeResult;
-		
+	
+	
+	public Map<String, String> getResultTree() throws IOException {
+		// read the event ascii grid
+		// ================================================
+		String[] eventFileList = new File(this.floodedFile).list();
+		for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
+			AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
+			double cellSize = Double.parseDouble(asciiControl.getProperty().get("cellSize"));
 
-		TreeMap<String, ArrayList<String>> observationTree = this.getEventObservation();
-
-		for (String iot[] : iotList) {
 			// get the iot sensor property
-			// ===============================
-			String stationName = iot[0];
-			double x = Double.parseDouble(iot[1]);
-			double y = Double.parseDouble(iot[2]);
+			// ============================================
+			for (String station : detectedPoint.keySet()) {
+				String stationName = station;
+				double x = Double.parseDouble(detectedPoint.get(station)[0]);
+				double y = Double.parseDouble(detectedPoint.get(station)[1]);
 
-			ArrayList<String> outArray = new ArrayList<String>();
-			outArray.add(stationName);
-
-			String[] eventFileList = new File(this.floodedFile).list();
-			for (int eventFile = 0; eventFile < eventFileList.length; eventFile++) {
-				// read the event ascii grid
-				AsciiBasicControl asciiControl = new AsciiBasicControl(floodedFile + eventFile + ".asc");
-				String[][] ascii =asciiControl .getAsciiGrid();
-				int position[] = asciiControl.getPosition(x, y);
-				int row = position[1];
-				int column = position[0];
-				
-				ArrayList<Double> temptValue = new ArrayList<Double>();
-
+				List<String> temptValue = new ArrayList<String>();
 				// get the selected grid
-				for (int countRow = -1 * (getGrid - 1) / 2; countRow <= (getGrid - 1) / 2; countRow++) {
-					for (int countColumn = -1 * (getGrid - 1) / 2; countColumn <= (getGrid - 1) / 2; countColumn++) {
-
-						// only for 5*5 grid array
-
+				// =============================================
+				for (int countRow = -1 * (detectedGrid - 1) / 2; countRow <= (detectedGrid - 1) / 2; countRow++) {
+					for (int countColumn = -1 * (detectedGrid - 1) / 2; countColumn <= (detectedGrid - 1)
+							/ 2; countColumn++) {
 						try {
-							temptValue.add(Double.parseDouble(ascii[row + countRow][column + countColumn]));
+							temptValue
+									.add(asciiControl.getValue(x + countColumn * cellSize, y + countColumn * cellSize));
 						} catch (Exception e) {
 						}
 					}
 				}
 				try {
 					double observationValue = Double.parseDouble(observationTree.get(stationName).get(eventFile));
-					outArray.add(new AtCommonMath(temptValue.stream().mapToDouble(Double::doubleValue).toArray())
-							.getClosestValue(observationValue) + "");
+					resultTree.put(station,
+							new AtCommonMath(
+									temptValue.stream().map(e -> Double.parseDouble(e)).collect(Collectors.toList()))
+											.getClosestValue(observationValue)
+									+ "");
 				} catch (Exception e) {
 				}
-
 			}
-			outArray.forEach(text -> System.out.print(text + "\t"));
-			System.out.println();
 		}
-
+		return this.resultTree;
 	}
 
-	private static String[][] getIotStation() {
-		return Global.getIotPosition();
+	public GetClosetValue setPoint(String station, String x, String y) {
+		this.detectedPoint.put(station, new String[] { x, y });
+		return this;
+	}
+
+	public GetClosetValue getAllIotStation() {
+		this.detectedPoint = Global.getAllIotPosition_En();
+		return this;
 	}
 
 	private TreeMap<String, ArrayList<String>> getEventObservation() throws IOException {

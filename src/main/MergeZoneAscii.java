@@ -16,7 +16,7 @@ public class MergeZoneAscii {
 
 		// the location of index folder which contains each zone data
 		String fileAdd = eventSimulationFileAdd;
-		String saveAdd = Global.saveFolder_MergeResult;
+		String saveAdd = Global.temptSaveFolder;
 
 		// clear the tmept save folder
 		new FileFunction().delAllFile(saveAdd);

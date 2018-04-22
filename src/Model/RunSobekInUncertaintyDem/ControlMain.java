@@ -45,11 +45,11 @@ public class ControlMain {
 
 	static public void moveResult() {
 		// create the new folder
-		String saveFolderName = String.valueOf(new File(Global.Global.analysisFolder).list().length);
-		new FileFunction().newFolder(Global.Global.analysisFolder + saveFolderName);
+		String saveFolderName = String.valueOf(new File(Global.Global.temptSaveFolder).list().length);
+		new FileFunction().newFolder(Global.Global.temptSaveFolder + saveFolderName);
 
 		// move result to the folder
-		new FileFunction().moveFolder(Global.Global.sobekResult, Global.Global.analysisFolder + saveFolderName + "\\");
+		new FileFunction().moveFolder(Global.Global.sobekResult, Global.Global.temptSaveFolder + saveFolderName + "\\");
 	}
 
 	static public TreeMap<String, ArrayList<Double>> getEventObservation() throws IOException {
@@ -83,7 +83,7 @@ public class ControlMain {
 
 	static public AnalysisResult analysisSetting() {
 		// start analysis
-		AnalysisResult analysis = new AnalysisResult(Global.Global.analysisFolder);
+		AnalysisResult analysis = new AnalysisResult(Global.Global.temptSaveFolder);
 
 		// set the detected grid
 		analysis.setDetectGrid(2);

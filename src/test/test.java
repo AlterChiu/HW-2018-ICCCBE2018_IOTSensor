@@ -19,16 +19,27 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import SOBEK.Runtimes;
+import asciiFunction.AsciiBasicControl;
+import asciiFunction.AsciiMerge;
+import usualTool.AtFileWriter;
 
 public class test {
 
 	public static void main(String[] args) throws IOException, DocumentException {
 		// TODO Auto-generated method stub
 
-		TreeMap<String,ArrayList< String>> tr = new TreeMap<String, ArrayList<String>>();
+		String fileAdd ="C:\\Sobek213\\TANZ1U01.lit\\DEM\\AnChung\\";
 		
-	
-		System.out.println(tr.get("23").get(0));
+		String[][] temptAscii = new AsciiBasicControl(fileAdd + "0.asc").getAsciiFile();
+		String[][] temptAsciiKn = new AsciiBasicControl(fileAdd + "0(kn).asc").getAsciiFile();
+		
+		for(int index = 1 ; index<=8 ; index++) {
+			temptAscii = new AsciiMerge(temptAscii , fileAdd + index + ".asc").getMergedAscii();
+			temptAsciiKn = new AsciiMerge(temptAsciiKn  ,  fileAdd + index + "(kn).asc").getMergedAscii(); 
+		}
+		
+		new AtFileWriter(temptAscii , fileAdd + "merge.asc").textWriter("    ");
+		new AtFileWriter(temptAsciiKn , fileAdd + "merge(kn).asc").textWriter("    ");
 
 	}
 }

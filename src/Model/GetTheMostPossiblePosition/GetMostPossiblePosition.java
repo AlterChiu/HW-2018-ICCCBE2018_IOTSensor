@@ -28,7 +28,7 @@ public class GetMostPossiblePosition {
 
 		int getGrid = detectedGrid;
 		String iotList[][] = getIotStation();
-		this.floodedFile = Global.saveFolder_MergeResult;
+		this.floodedFile = Global.temptSaveFolder;
 
 		this.observationTree = this.getEventObservation();
 		String[] eventFileList = new File(this.floodedFile).list();

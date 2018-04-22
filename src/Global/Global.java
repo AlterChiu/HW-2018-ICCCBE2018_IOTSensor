@@ -1,5 +1,7 @@
 package Global;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Global {
@@ -18,12 +20,13 @@ public class Global {
 	static public String observation0927_10min = "S:\\HomeWork\\ICCCBE2018\\observation\\10min\\0927.txt";
 	static public String observation0731_10min = "S:\\HomeWork\\ICCCBE2018\\observation\\10min\\0731.txt";
 
-	static public String saveFolder_MergeResult = "S:\\HomeWork\\ICCCBE2018\\mergedAscii\\";
+	static public String sobekAnalysisFolder = "S:\\HomeWork\\ICCCBE2018\\mergedAscii\\";
 
 	static public String originalDem = "C:\\Sobek213\\TANZ1U01.lit\\DEM\\ZoneU1_20m.asc";
 	static public String sobekRuntimeDem = "C:\\Sobek213\\TANZ1U01.lit\\DEM\\firstDem.asc";
 	static public String sobekResult = "C:\\Sobek213\\Output\\";
-	static public String analysisFolder = "C:\\Sobek213\\Analysis\\";
+	static public String temptSaveFolder = "C:\\Sobek213\\Analysis\\";
+	static public String demFolder = "C:\\Sobek213\\TANZ1U01.lit\\DEM\\";
 
 	static public TreeMap<String, String[]> getUncertaintyPosition() {
 		TreeMap<String, String[]> temptTree = new TreeMap<String, String[]>();
@@ -54,7 +57,28 @@ public class Global {
 		}
 		return temptTree;
 	}
+	
+	static public Map<String, String[]> getAllIotPosition_En() {
+		Map<String, String[]> temptTree = new HashMap<String, String[]>();
+		String position[][] = { { "AnChung5", "162367.190368440000000", "2551199.148974450000000" },
+				{ "HaiTeing4", "165662.855498722000000", "2551505.057514020000000" },
+				{ "HaiTeing3", "166352.509038435000000", "2549777.889128630000000" },
+				{ "ChauHuangTemple", "166393.082894916000000", "2548985.283620740000000" },
+				{ "LongKin", "169920.008159805000000", "2551706.181965540000000" },
+				{ "AnChung", "167329.839003952000000", "2549390.511627280000000" },
+				{ "DinAhn", "168461.012654870000000", "2549258.957237000000000" },
+				{ "AnHo", "169782.704140448000000", "2549447.958468440000000" },
+				{ "SeeDingLaio", "169520.714143787000000", "2547951.882686490000000" },
+				{ "YuiNongYuiYeeSection", "172977.183568405000000", "2543479.676934840000000" } };
 
+		for (String[] station : position) {
+			temptTree.put(station[0], new String[] { station[1], station[2] });
+		}
+		return temptTree;
+	}
+
+	
+	
 	static public String[][] getIotPosition() {
 		return new String[][] { { "安中五站", "162367.190368440000000", "2551199.148974450000000" },
 				{ "海佃四站", "165662.855498722000000", "2551505.057514020000000" },

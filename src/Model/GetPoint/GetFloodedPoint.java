@@ -16,7 +16,7 @@ public class GetFloodedPoint {
 		// TODO Auto-generated method stub
 		String iotList[][] = getIotStation();
 
-		String floodedFile = "S:\\HomeWork\\ICCCBE2018\\mergedAscii\\";
+		String floodedFile = Global.sobekAnalysisFolder;
 
 		for (String iot[] : iotList) {
 			String stationName = iot[0];

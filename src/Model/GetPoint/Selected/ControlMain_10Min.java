@@ -11,7 +11,7 @@ public class ControlMain_10Min {
 		// TODO Auto-generated method stub
 		FileFunction ff = new FileFunction();
 		
-		String saveAdd = Global.Global.saveFolder_MergeResult;
+		String saveAdd = Global.Global.temptSaveFolder;
 		ff.delAllFile(saveAdd);
 		
 //		String eventSimulation = "S:\\HomeWork\\ICCCBE2018\\多次成果\\20160927(09~09+1)\\10min_許\\";

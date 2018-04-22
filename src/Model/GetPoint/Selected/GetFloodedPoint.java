@@ -15,7 +15,7 @@ public class GetFloodedPoint {
 		// TODO Auto-generated method stub
 		String iotList[][] = getIotStation();
 
-		String floodedFile = Global.saveFolder_MergeResult;
+		String floodedFile = Global.temptSaveFolder;
 
 		for (String iot[] : iotList) {
 			String stationName = iot[0];
