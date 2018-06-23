@@ -15,9 +15,9 @@ import usualTool.AtFileWriter;
 import usualTool.FileFunction;
 
 public class ControlMain {
-
-	private static String observationEvent = Global.Global.observation0611;
-	private static String temptResultFolder = "S:\\HomeWork\\ICCCBE2018\\DEMUncertainty\\result\\";
+	
+	private static String observationEvent = "";
+	private static String temptResultFolder ="";
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub

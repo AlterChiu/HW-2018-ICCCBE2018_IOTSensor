@@ -12,7 +12,7 @@ public class GetPositionDEM {
 
 String fileAdd  = "C:\\HomeWork\\山峰可可\\LevelDEM\\";
 		
-		AsciiBasicControl ascii = new AsciiBasicControl(fileAdd + "total.asc").cutFirstColumn();
+		AsciiBasicControl ascii = new AsciiBasicControl(fileAdd + "total.asc");
 		String[][] asciiContent = ascii.getAsciiGrid();
 		String noData = ascii.getProperty().get("noData");
 		

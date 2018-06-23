@@ -21,8 +21,8 @@ public class GetClosetValue {
 	private String floodedFile = Global.temptSaveFolder;
 	private String eventObservation;
 	private int detectedGrid;
-	private Map<String, String[]> detectedPoint = new HashMap<String, String[]>();
-	private Map<String, String> resultTree = new HashMap<String, String>();
+	private Map<String, String[]> detectedPoint = Global.getAllIotPosition_En();
+	private Map<String, List<String>> resultTree = new HashMap<String, List<String>>();
 	private Map<String, ArrayList<String>> observationTree = this.getEventObservation();
 
 	public GetClosetValue(int detectedGrid, String eventObservation) throws IOException {
@@ -31,9 +31,8 @@ public class GetClosetValue {
 		this.detectedGrid = detectedGrid;
 	}
 
-	
-	
-	public Map<String, String> getResultTree() throws IOException {
+	public Map<String, List<String>> getResultTree() throws IOException {
+
 		// read the event ascii grid
 		// ================================================
 		String[] eventFileList = new File(this.floodedFile).list();
@@ -61,13 +60,21 @@ public class GetClosetValue {
 						}
 					}
 				}
+				// initialization of result map
+				//==============================================
+				List<String> stationResultList = this.observationTree.get(station);
+				if (stationResultList == null) {
+					stationResultList = new ArrayList<String>();
+				}
+
+				// skip if there is no data in observation
 				try {
 					double observationValue = Double.parseDouble(observationTree.get(stationName).get(eventFile));
-					resultTree.put(station,
-							new AtCommonMath(
-									temptValue.stream().map(e -> Double.parseDouble(e)).collect(Collectors.toList()))
-											.getClosestValue(observationValue)
-									+ "");
+					stationResultList.add(new AtCommonMath(
+							temptValue.stream().map(e -> Double.parseDouble(e)).collect(Collectors.toList()))
+									.getClosestValue(observationValue)
+							+ "");
+					this.resultTree.put(station, stationResultList);
 				} catch (Exception e) {
 				}
 			}
@@ -75,16 +82,21 @@ public class GetClosetValue {
 		return this.resultTree;
 	}
 
+	// set the calculate point
+	//=================================================
 	public GetClosetValue setPoint(String station, String x, String y) {
 		this.detectedPoint.put(station, new String[] { x, y });
 		return this;
 	}
 
-	public GetClosetValue getAllIotStation() {
+	public GetClosetValue setAllIotStation() {
 		this.detectedPoint = Global.getAllIotPosition_En();
 		return this;
 	}
-
+	//=====================================================
+	
+	
+	
 	private TreeMap<String, ArrayList<String>> getEventObservation() throws IOException {
 		TreeMap<String, ArrayList<String>> temptTree = new TreeMap<String, ArrayList<String>>();
 		String[][] temptContent = new AtFileReader(this.eventObservation).getContent("\t");
@@ -93,7 +105,7 @@ public class GetClosetValue {
 			ArrayList<String> temptArray = new ArrayList<String>();
 
 			for (int row = 1; row < temptContent.length; row++) {
-				temptArray.add(temptContent[row][column]);
+				temptArray.add(Double.parseDouble(temptContent[row][column])*0.01+"");
 			}
 			temptTree.put(temptContent[0][column], temptArray);
 		}
