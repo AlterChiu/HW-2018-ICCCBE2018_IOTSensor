@@ -15,29 +15,33 @@ public class ControlMain {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		FileFunction ff = new FileFunction();
-		
-		// clear the tempt save folder
-		String saveAdd = Global.temptSaveFolder;
-		ff.delAllFile(saveAdd);
+		String stationList[] = new String[] { "AnChung5", "HaiTeing4", "HaiTeing3", "ChauHuangTemple", "LongKin",
+				"AnChung", "DinAhn", "AnHo", "SeeDingLaio" };
 
-		// copy the file to the tempt save folder
-		String originalName = "\\dm1d";
-		for (int index = 0; index <= 24; index++) {
-			ff.copyFile(eventSimulation + originalName + String.format("%04d", index) + ".asc",
-					saveAdd + (index) + ".asc");
-		}
-		
-		// get the result 
+		// // clear the tempt save folder
+		// String saveAdd = Global.temptSaveFolder;
+		// ff.delAllFile(saveAdd);
+		//
+		// // copy the file to the tempt save folder
+		// String originalName = "\\dm1d";
+		// for (int index = 0; index <= 24; index++) {
+		// ff.copyFile(eventSimulation + originalName + String.format("%04d", index) +
+		// ".asc",
+		// saveAdd + (index) + ".asc");
+		// }
+
+		// get the result
 		GetPoint getPoint = new GetPoint();
 		getPoint.setAllPoint();
-		Map<String,List<String>> resultMap = getPoint.getResultMap();
-		
+		Map<String, List<String>> resultMap = getPoint.getResultMap();
+
 		// out put the result
-		for(String station : resultMap.keySet()) {
-			System.out.print(station);
-			resultMap.get(station).forEach(e -> System.out.print("\t" + e));
+		for (int index = 0; index < stationList.length; index++) {
+			System.out.print(stationList[index]);
+			resultMap.get(stationList[index]).forEach(result -> System.out.print("\t" + result));
+			System.out.println();
 		}
-		
+
 	}
 
 }
