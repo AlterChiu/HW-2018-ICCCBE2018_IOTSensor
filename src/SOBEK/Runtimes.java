@@ -10,7 +10,7 @@ public class Runtimes {
 		// run the sobek modle
 		// and the model.exe should be under this index
 
-		String command[] = new String[] { "cmd.exe", "/c", " start  /wait /B Sobek_Forecast.bat " };
+		String command = "cmd /c start Sobek_Forecast.bat" ;
 		ProcessBuilder builder = new ProcessBuilder();
 		builder.directory(new File("C:\\Sobek213\\"));
 		builder.command(command);

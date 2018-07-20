@@ -11,8 +11,8 @@ public class TwentyMeterDem {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Map<String, String[]> iotPosition = Global.Global.getAllIotPosition_En();
-		String saveAdd = "S:\\HomeWork\\ICCCBE2018\\LevelDEM\\IOT_1m\\";
-		String asciiAdd = "S:\\HomeWork\\ICCCBE2018\\LevelDEM\\Zone1.asc";
+		String saveAdd = "S:\\\\HomeWork\\\\ICCCBE2018\\\\LevelDEM\\\\IOT_1m\\\\";
+		String asciiAdd = "S:\\HomeWork\\ICCCBE2018\\LevelDEM\\IOT_1m\\Hy_Dem(20m).asc";
 		String asciiKnAdd = "S:\\HomeWork\\ICCCBE2018\\LevelDEM\\ZoneU1_20m(kn).asc";
 
 		for (String position : iotPosition.keySet()) {
@@ -31,8 +31,8 @@ public class TwentyMeterDem {
 			String[][] outAsciiKn = totalAsciiKn.getClipAsciiFile(center[0]-6, center[1]-6,
 					center[0]+6, center[1]+6);
 			
-			new AtFileWriter(outAscii , saveAdd + position + "\\buffer100m+20m(20m).asc").textWriter("    ");
-			new AtFileWriter(outAsciiKn , saveAdd + position + "\\buffer100m+20m(20m)(kn).asc").textWriter("    ");
+			new AtFileWriter(outAscii , saveAdd + position + "\\buffer100m+20m(20m)_Hy.asc").textWriter("    ");
+			new AtFileWriter(outAsciiKn , saveAdd + position + "\\buffer100m+20m(20m)_Hy(kn).asc").textWriter("    ");
 			
 		}
 
